@@ -1,0 +1,44 @@
+{
+  "name": "tickets-api",
+  "version": "1.0.0",
+  "description": "E-Commerce API that sell shows and event tickets",
+  "main": "./build/index.js",
+  "scripts": {
+    "ts-build": "tsc",
+    "ts-watch": "tsc --watch",
+    "lint": "eslint src/**",
+    "lint-fix": "esw src/** --fix",
+    "lint-watch": "cls && esw --watch src/**",
+    "build": "del-cli --force ./build && tsc",
+    "start": "yarn build && node ./build/index.js",
+    "watch": "set NODE_ENV=development&& nodemon --watch  index.js",
+    "clean": "del-cli --force ./build"
+  },
+  "author": "Márcio Gomes",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/vision": "5.5.4",
+    "boom": "^7.3.0",
+    "del-cli": "^5.0.0",
+    "dotenv": "^16.0.1",
+    "hapi": "17.8.5",
+    "hapi-swagger": "9.4.2",
+    "inert": "5.1.3",
+    "joi": "^17.6.0",
+    "pg": "^8.8.0",
+    "typeorm": "^0.3.7",
+    "vision": "^5.4.4"
+  },
+  "devDependencies": {
+    "@types/boom": "^7.3.2",
+    "@types/hapi": "^18.0.7",
+    "@types/joi": "^17.2.3",
+    "@types/node": "^18.7.11",
+    "@typescript-eslint/eslint-plugin": "^5.34.0",
+    "@typescript-eslint/parser": "^5.34.0",
+    "eslint": "^8.22.0",
+    "eslint-watch": "^8.0.0",
+    "nodemon": "^2.0.19",
+    "typescript": "^4.7.4"
+  }
+}
