@@ -1,5 +1,7 @@
 // import * as Joi from 'joi;'
 import * as Hapi from 'hapi';
+import * as UserValidator from './user-validator';
+
 import { UserController } from './user-controller';
 
 const routePrefix = '/user';
@@ -9,7 +11,7 @@ export function startRoute (server: Hapi.Server) {
     server.bind(userController);
 
     server.route({
-        method: "GET",
+        method: "POST",
         path: `${routePrefix}/create`,
         options:{
             handler: userController.createUser,
@@ -17,6 +19,7 @@ export function startRoute (server: Hapi.Server) {
             tags: ['api', 'user'],
             description: 'Route to create a regular user',
             validate: {
+                payload: UserValidator.createUserValidator
             },
             plugins: {
                 'hapi-swagger': {

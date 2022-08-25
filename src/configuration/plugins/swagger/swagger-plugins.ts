@@ -3,7 +3,7 @@ import { IPlugin } from "../../../interfaces/configuration/plugins/IPlugin";
 import { ISwagger } from "../../../interfaces/configuration/plugins/Swagger/ISwagger";
 
 const Inert = require('inert');
-const Vision = require('@hapi/vision')
+const Vision = require('@hapi/vision');
 
 export class SwaggerPlugin implements IPlugin {
 

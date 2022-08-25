@@ -1,7 +1,7 @@
 import { IServerConfiguration } from './interfaces/configuration/IServerConfiguration';
 import { Request, Server } from 'hapi';
 
-import * as Userdata from './api/user';
+import * as Userdata from './api/controllers/user';
 import { SwaggerPlugin } from './configuration/plugins/swagger/swagger-plugins';
 import { registerPlugins } from './configuration/plugins/plugins-register';
 
