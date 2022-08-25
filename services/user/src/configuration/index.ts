@@ -1,7 +1,6 @@
 require('dotenv').config();
 
-import { IServerConfiguration } from "../interfaces/configuration/IServerConfiguration";
-import { DatabaseConfiguration } from "./database/configuration";
+import { DatabaseConfiguration, IServerConfiguration } from 'global-database'
 
 export class ServerConfiguration implements IServerConfiguration {
     server = {

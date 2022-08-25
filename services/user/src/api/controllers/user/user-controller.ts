@@ -4,7 +4,7 @@ import * as documentValidator from 'cpf-cnpj-validator';
 
 import { CreateUserRequest } from "../../../interfaces/api/request";
 import { UserService } from '../../services/UserService';
-import { IUser } from '../../../interfaces/database/entities/IUser';
+import { IUser } from 'global-database';
 
 export class UserController {
     private userService = new UserService();

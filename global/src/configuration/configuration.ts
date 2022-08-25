@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-import { IDatabaseConfiguration } from "../../interfaces/configuration/database/IDatabaseConfiguration";
+import { IDatabaseConfiguration } from "../interfaces/configuration/database/IDatabaseConfiguration";
 
 export class DatabaseConfiguration implements IDatabaseConfiguration {
     host: string = process.env.DB_HOST;

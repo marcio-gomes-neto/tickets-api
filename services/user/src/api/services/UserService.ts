@@ -1,4 +1,4 @@
-import { User } from "../../database/entities";
+import {User} from 'global-database'
 
 export class UserService{
     private userRepository = User;

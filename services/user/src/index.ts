@@ -1,5 +1,5 @@
 import { ServerConfiguration } from "./configuration";
-import { ConnectionFactory } from "./database/factory/connectionFactory";
+import { ConnectionFactory } from "global-database";
 import { TicketsServer } from "./server";
 
 (async () => {

@@ -1,0 +1,25 @@
+{
+  "name": "user",
+  "version": "1.0.0",
+  "description": "User microservice",
+  "main": "./build/index.js",
+  "scripts": {
+    "ts-build": "tsc",
+    "ts-watch": "tsc --watch",
+    "lint": "eslint src/**",
+    "lint-fix": "esw src/** --fix",
+    "lint-watch": "cls && esw --watch src/**",
+    "build": "del-cli --force ./build && tsc",
+    "start": "yarn build && node ./build/index.js",
+    "watch": "set NODE_ENV=development&& nodemon --watch  index.js",
+    "clean": "del-cli --force ./build"
+  },
+  "author": "Márcio Gomes",
+  "license": "ISC",
+  "dependencies": {
+    "del-cli": "^5.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.7.4"
+  }
+}

@@ -1,9 +1,7 @@
-import { IServerConfiguration } from './interfaces/configuration/IServerConfiguration';
 import { Request, Server } from 'hapi';
 
 import * as Userdata from './api/controllers/user';
-import { SwaggerPlugin } from './configuration/plugins/swagger/swagger-plugins';
-import { registerPlugins } from './configuration/plugins/plugins-register';
+import { SwaggerPlugin, registerPlugins, IServerConfiguration } from 'global-database';
 
 export class TicketsServer {
     constructor (private configs: IServerConfiguration) {}
@@ -14,15 +12,15 @@ export class TicketsServer {
     }
 
     private async registerPlugins(server: Server){
-        const swaggerPluggins = new SwaggerPlugin(server, {
-            name: 'Tickets',
-            version: '1.0.0',
-            desc: 'Ticket E-Commerce'
+        // const swaggerPluggins = new SwaggerPlugin(server, {
+        //     name: 'Tickets',
+        //     version: '1.0.0',
+        //     desc: 'Ticket E-Commerce'
 
-        });
+        // });
 
-        await registerPlugins([swaggerPluggins]);
-        console.log('Plugins registered.');
+        // await registerPlugins([swaggerPluggins]);
+        // console.log('Plugins registered.');
     }
 
     private registerExtensions(server: Server){
