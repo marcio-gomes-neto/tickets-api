@@ -1,4 +1,5 @@
 import { IDatabaseConfiguration } from "./database/IDatabaseConfiguration";
+import { IJwt } from "./plugins/Jwt/IJwt";
 
 export interface IServerConfiguration{
     server: {
@@ -6,5 +7,12 @@ export interface IServerConfiguration{
         port: number;
         baseURL: string;
     }
-    database: IDatabaseConfiguration
+    database: IDatabaseConfiguration;
+
+    jwt: IJwt;
+
+    emailer: {
+        email: string;
+        password: string;
+    }
 }

@@ -1,26 +1,36 @@
 import { Request, Server } from 'hapi';
 
 import * as Userdata from './api/controllers/user';
-import { SwaggerPlugin, registerPlugins, IServerConfiguration } from 'global-database';
+import * as Admin from './api/controllers/admin'
+import { JwtPlugin, SwaggerPlugin, registerPlugins, IServerConfiguration } from 'global-database';
 
 export class TicketsServer {
     constructor (private configs: IServerConfiguration) {}
 
-    private registerRoutes(server: Server){
-        Userdata.startRoute(server);
+    private registerRoutes(server: Server, config:IServerConfiguration){
+
+        Userdata.startRoute(server, config);
+        Admin.startRoute(server, config)
         console.log('Routes registered.');
     }
 
     private async registerPlugins(server: Server){
-        // const swaggerPluggins = new SwaggerPlugin(server, {
-        //     name: 'Tickets',
-        //     version: '1.0.0',
-        //     desc: 'Ticket E-Commerce'
+        const jwtPlugin = new JwtPlugin(server, {
+            privateKey: this.configs.jwt.privateKey,
+            publicKey: this.configs.jwt.publicKey,
+            expiration: this.configs.jwt.expiration,
+            algorithm: this.configs.jwt.algorithm,
+        })
+        
+        const swaggerPluggins = new SwaggerPlugin(server, {
+            name: 'Tickets',
+            version: '1.4.0',
+            desc: 'Ticket E-Commerce'
 
-        // });
+        });
 
-        // await registerPlugins([swaggerPluggins]);
-        // console.log('Plugins registered.');
+        await registerPlugins([jwtPlugin, swaggerPluggins]);
+        console.log('Plugins registered.');
     }
 
     private registerExtensions(server: Server){
@@ -51,11 +61,11 @@ export class TicketsServer {
             }
         });
 
-        server.realm.modifiers.route.prefix = '/api';
+        server.realm.modifiers.route.prefix = '/user';
 
-        this.registerRoutes(server);
-        await this.registerPlugins(server);
         this.registerExtensions(server);
+        await this.registerPlugins(server);
+        this.registerRoutes(server, this.configs);
 
         return server;
     }

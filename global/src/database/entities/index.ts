@@ -1,4 +1,4 @@
-export * from './user/User';
-export * from './ticket/Ticket';
-export * from './order/Order';
-export * from './order/OrderItem'
+export { User } from './user/User';
+export { Ticket } from './ticket/Ticket';
+export { Order } from './order/Order';
+export { OrderItem } from './order/OrderItem'

@@ -11,5 +11,5 @@ CREATE TABLE public."user"
     admin boolean NOT NULL DEFAULT false,
     created_at time with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id, cpf),
-    UNIQUE(id)
+    UNIQUE(id, cpf, email)
 );

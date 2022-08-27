@@ -11,7 +11,7 @@ export class ConnectionFactory {
             password: conn.password,
             database: conn.database,
             entities: Object.keys(entities).map( (key) => entities[key]),
-            logging: []
+            logging: true
         });
         
         return connection;

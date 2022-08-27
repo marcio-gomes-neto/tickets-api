@@ -1,14 +1,14 @@
 {
   "name": "global-database",
   "private": true,
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Global database package",
   "main": "./build/index.js",
   "scripts": {
     "ts-build": "tsc",
     "ts-watch": "tsc --watch",
     "lint": "eslint src/**",
-    "lint-fix": "esw src/** --fix",
+    "lint-fix": "eslint src/** --fix",
     "lint-watch": "cls && esw --watch src/**",
     "build": "del-cli --force ./build && tsc",
     "clean": "del-cli --force ./build"
@@ -19,6 +19,10 @@
     "del-cli": "^5.0.0"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.35.1",
+    "@typescript-eslint/parser": "^5.35.1",
+    "eslint": "^8.22.0",
+    "gts": "^3.1.0",
     "typescript": "^4.7.4"
   }
 }

@@ -5,10 +5,10 @@ export class User extends BaseEntity implements IUser{
     @PrimaryGeneratedColumn('uuid', {name: 'id'})
     id?: string;
 
-    @Column('varchar', {nullable: false, length: 11, name:'cpf'})
+    @Column('varchar', {nullable: false, length: 11, unique: true, name:'cpf'})
     cpf: string;
 
-    @Column('varchar', {nullable: true, length: 255, name:'email'})
+    @Column('varchar', {nullable: true, length: 255, unique: true, name:'email'})
     email: string;
 
     @Column('varchar', {nullable: false, length: 255, name:'email_verification'})
