@@ -1,6 +1,10 @@
 import { Request } from "hapi";
 
 export interface CreateUserRequest extends Request {
+    authId?:{
+        userId: string;
+    }
+
     payload: {
         cpf: string;
         name: string;

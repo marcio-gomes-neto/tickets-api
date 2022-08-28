@@ -38,7 +38,7 @@ export class UserController {
                 return Boom.notFound(`User not found to given ${cpf ? 'cpf' : 'email'}.`);
             }
 
-            if(findUser.status === 'blocked') return Boom.unauthorized('User blocked');
+            if(findUser.status === 'blocked') return Boom.unauthorized('User blocked.');
 
             const checkPassword = await this.validateUserPassword(password, findUser.password);
             if(!checkPassword){
@@ -87,6 +87,7 @@ export class UserController {
     }
 
     async createUser(request: CreateUserRequest, h: Hapi.ResponseToolkit){
+        const { userId } = request.authId;
         const { cpf, password, confirmPassword, name, email, admin, phone } = request.payload;
         const salt = await bcrypt.genSalt(10);
         const userPayload:IUser = {
@@ -101,8 +102,15 @@ export class UserController {
         };
 
         if(admin){
-            //when creating an admin, it need an authorization to do so.
-            return Boom.unauthorized('Requires authorization to create admin user');
+            if(!userId) return Boom.unauthorized('Requires authorization to create admin user');
+            try {
+                const findAdmin = await this.userService.findUserById(userId);
+                if (!findAdmin) return Boom.notFound('User not found.');
+                if (!findAdmin.admin) return Boom.unauthorized('Admin level necessary.');
+            } catch (error) {
+                console.log(error);
+                return Boom.badRequest('Unexpected Error');  
+            }
         }
 
         if(password !== confirmPassword) return Boom.badRequest('Password do not match.')
@@ -143,17 +151,18 @@ export class UserController {
         try {
             const findUser = await this.userService.findUserById(userId);
             if (!findUser) return Boom.notFound('User not found.');
+            if (findUser.status !== 'active') return Boom.unauthorized('User needs to be active.');
 
             name ? findUser.name = name : undefined;
             phone ? findUser.phone = phone : undefined;
             
-            const updatedUser = await this.userService.saveUserUpdates(findUser);
+            await this.userService.saveUserUpdates(findUser);
             const response = {
                 success: true,
                 payload: {
-                    id: updatedUser.id,
-                    name: updatedUser.name,
-                    phone: updatedUser.phone
+                    id: findUser.id,
+                    name: findUser.name,
+                    phone: findUser.phone
                 }
             }
 
@@ -201,6 +210,7 @@ export class UserController {
         try {
             const findUser = await this.userService.findUserById(userId);
             if (!findUser) return Boom.notFound('User not found.');
+            if (findUser.status !== 'active') return Boom.unauthorized('User needs to be active.');
 
             const checkPassword = await this.validateUserPassword(password, findUser.password);
             if(!checkPassword){
@@ -210,7 +220,7 @@ export class UserController {
             findUser.password = await bcrypt.hash(newPassword, salt);
             await this.userService.saveUserUpdates(findUser);
 
-            return h.response({success: true}).code(200)
+            return h.response({success: true, message: 'Password changed.'}).code(200)
         } catch (error) {
             console.log(error);
             return Boom.badRequest('Unexpected Error'); 

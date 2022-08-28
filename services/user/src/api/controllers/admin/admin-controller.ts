@@ -26,7 +26,7 @@ export class AdminController {
             
             if (!status){
                 const allUsers = await this.adminUserService.getAllUsers();
-                if(!allUsers) return h.response({success: true}).code(202);
+                if(!allUsers) return h.response({success: true, message: 'No users found'}).code(202);
 
                 response = {
                     success: true,
@@ -34,6 +34,7 @@ export class AdminController {
                 }
             } else {
                 const allUsersByStatus = await this.adminUserService.getAllUsersByStatus(status)
+                if(!allUsersByStatus) return h.response({success: true, message: 'No users found'}).code(202);
 
                 response = {
                     success: true,
@@ -53,7 +54,7 @@ export class AdminController {
         const { id, cpf, email } = request.payload
 
         if (!userId) return Boom.unauthorized('Missing user ID.');
-        if (!cpf && !email && !id) return h.response({success: true}).code(202);
+        if (!cpf && !email && !id) return Boom.badRequest('No identifier sent.')
 
         try {
             const findUser = await this.userService.findUserById(userId);
@@ -87,7 +88,7 @@ export class AdminController {
         const { id, cpf, email } = request.payload
 
         if (!userId) return Boom.unauthorized('Missing user ID.');
-        if (!cpf && !email && !id) return h.response({success: true}).code(202);
+        if (!cpf && !email && !id) return Boom.badRequest('No identifier sent.')
 
         try {
             const findUser = await this.userService.findUserById(userId);

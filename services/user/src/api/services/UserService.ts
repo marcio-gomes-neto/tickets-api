@@ -43,7 +43,6 @@ export class UserService{
     }
 
     async saveUserUpdates(user: IUser){
-        const updateUser = await this.userRepository.save(user);
-        return updateUser;
+        await this.userRepository.save(user);
     }
 }

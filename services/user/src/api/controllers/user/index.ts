@@ -13,10 +13,11 @@ export function startRoute (server: Hapi.Server, configs: IServerConfiguration) 
         path: `/create`,
         options:{
             handler: userController.createUser,
-            auth: false,
+            auth: "jwt",
             tags: ['api', 'user'],
             description: 'Route to create a regular user',
             validate: {
+                headers: UserValidator.optionalJwtValidator,
                 payload: UserValidator.createUserValidator
             },
             plugins: {

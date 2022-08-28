@@ -4,6 +4,10 @@ export const jwtValidator = Joi.object().keys({
     authorization: Joi.string().required(),
 }).unknown();
 
+export const optionalJwtValidator = Joi.object().keys({
+    authorization: Joi.string(),
+}).unknown();
+
 export const createUserValidator = Joi.object().keys({
     cpf: Joi.string().trim().max(11).required(),
     email: Joi.string().trim().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),

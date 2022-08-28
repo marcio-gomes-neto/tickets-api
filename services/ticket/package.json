@@ -1,7 +1,7 @@
 {
-  "name": "user",
-  "version": "1.1.1",
-  "description": "User microservice",
+  "name": "ticket",
+  "version": "1.0.0",
+  "description": "Ticket microservice",
   "main": "./build/index.js",
   "scripts": {
     "ts-build": "tsc",
@@ -16,12 +16,12 @@
   },
   "author": "Márcio Gomes",
   "license": "ISC",
-  "dependencies": {
-    "bcrypt": "^5.0.1",
-    "del-cli": "^5.0.0"
-  },
   "devDependencies": {
-    "@types/bcrypt": "^5.0.0",
-    "typescript": "^4.7.4"
+    "typescript": "^4.8.2"
+  },
+  "dependencies": {
+    "@hapi/joi-date": "^2.0.1",
+    "@joi/date": "^2.1.0",
+    "del-cli": "^5.0.0"
   }
 }
