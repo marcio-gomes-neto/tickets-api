@@ -15,7 +15,7 @@ export class TicketController {
     async createNewEvent(request: CreateNewEventRequest, h: Hapi.ResponseToolkit){
         const { userId } = request.authId;
         const { name, description, genre, type, quantity, price, eventDate } = request.payload;
-        let eventExists
+        let eventExists;
 
         const newEvent = {
             name,
@@ -25,7 +25,7 @@ export class TicketController {
             quantity,
             price: price*100,
             eventDate: new Date(eventDate),
-        }
+        };
 
         if (!userId) return Boom.unauthorized('Missing user ID');
 
@@ -36,7 +36,7 @@ export class TicketController {
             if (findUser.status !== 'active') return Boom.unauthorized('User needs to be active.');
             
             const findEvents = await this.ticketService.getEventByName(name);
-            findEvents.forEach(event => { if (event.price === newEvent.price) eventExists = true });
+            findEvents.forEach(event => { if (event.price === newEvent.price) eventExists = true; });
             if (eventExists) return Boom.badRequest('This event already registered with this price.');
 
             const createNewEvent = await this.ticketService.createNewTicket(newEvent);
@@ -48,7 +48,7 @@ export class TicketController {
                     quantity: createNewEvent.quantity,
                     eventDate: createNewEvent.eventDate
                 }
-            }
+            };
 
             return h.response(response).code(201);
         } catch (error) {
@@ -65,7 +65,7 @@ export class TicketController {
             const response = {
                 success:true,
                 payload: getAllEvents
-            }
+            };
 
             return h.response(response).code(200);
         } catch (error) {
@@ -82,7 +82,7 @@ export class TicketController {
             const response = {
                 success:true,
                 payload: getAllActiveEvents
-            }
+            };
 
             return h.response(response).code(200);
         } catch (error) {
@@ -105,7 +105,7 @@ export class TicketController {
             const response = {
                 success:true,
                 payload: allRawEvents
-            }
+            };
 
             return h.response(response).code(200);
         } catch (error) {
@@ -116,7 +116,7 @@ export class TicketController {
 
     async deactivateEvent(request: DeactivateEventRequest, h: Hapi.ResponseToolkit){
         const { userId } = request.authId;
-        const { id } = request.params
+        const { id } = request.params;
         if (!userId) return Boom.unauthorized('Missing user ID');
 
         try {
@@ -129,7 +129,7 @@ export class TicketController {
             if (!findEvent) return Boom.notFound('Event not found.');
             if (!findEvent.active) return Boom.notAcceptable('Event already deactivated.');
 
-            await this.ticketService.deactivateEvent(findEvent)
+            await this.ticketService.deactivateEvent(findEvent);
             const response = {
                 success: true,
                 payload: {
@@ -137,7 +137,7 @@ export class TicketController {
                     name: findEvent.name,
                     active: false
                 }
-            }
+            };
 
             return h.response(response).code(200);
         } catch (error) {
@@ -148,7 +148,7 @@ export class TicketController {
 
     async reactivateEvent(request: ReactivateEventRequest, h: Hapi.ResponseToolkit){
         const { userId } = request.authId;
-        const { id } = request.params
+        const { id } = request.params;
         if (!userId) return Boom.unauthorized('Missing user ID');
 
         try {
@@ -159,10 +159,10 @@ export class TicketController {
 
             const findEvent = await this.ticketService.getEventById(id);
             if (!findEvent) return Boom.notFound('Event not found');
-            console.log(findEvent)
+            console.log(findEvent);
             if (findEvent.active) return Boom.notAcceptable('Event already active');
 
-            await this.ticketService.activateEvent(findEvent)
+            await this.ticketService.activateEvent(findEvent);
             const response = {
                 success: true,
                 payload: {
@@ -170,7 +170,7 @@ export class TicketController {
                     name: findEvent.name,
                     active: true
                 }
-            }
+            };
 
             return h.response(response).code(200);
         } catch (error) {
@@ -181,7 +181,7 @@ export class TicketController {
 
     async findEventById(request: FindEventRequest, h: Hapi.ResponseToolkit){
         const { userId } = request.authId;
-        const { id } = request.params
+        const { id } = request.params;
         if (!userId) return Boom.unauthorized('Missing user ID');
 
         try {
@@ -195,7 +195,7 @@ export class TicketController {
             const response = {
                 success: true,
                 payload: findEvent
-            }
+            };
 
             return h.response(response).code(200);
         } catch (error) {

@@ -1,5 +1,6 @@
 import { Request, Server } from 'hapi';
 
+import * as Item from './api/controllers/item';
 import * as Order from './api/controllers/order';
 import { JwtPlugin, SwaggerPlugin, registerPlugins, IServerConfiguration } from 'global-database';
 
@@ -8,6 +9,7 @@ export class TicketsServer {
 
     private registerRoutes(server: Server, config:IServerConfiguration){
 
+        Item.startRoute(server, config);
         Order.startRoute(server, config);
         console.log('Routes registered.');
     }
@@ -18,7 +20,7 @@ export class TicketsServer {
             publicKey: this.configs.jwt.publicKey,
             expiration: this.configs.jwt.expiration,
             algorithm: this.configs.jwt.algorithm,
-        })
+        });
         
         const swaggerPluggins = new SwaggerPlugin(server, {
             name: 'Tickets',

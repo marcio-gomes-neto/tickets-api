@@ -1,7 +1,7 @@
 {
   "name": "global-database",
   "private": true,
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Global database package",
   "main": "./build/index.js",
   "scripts": {
@@ -16,13 +16,13 @@
   "author": "Márcio Gomes",
   "license": "ISC",
   "dependencies": {
-    "del-cli": "^5.0.0"
+    "del-cli": "^5.0.0",
+    "typescript": "4.3.2"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.35.1",
     "@typescript-eslint/parser": "^5.35.1",
     "eslint": "^8.22.0",
-    "gts": "^3.1.0",
-    "typescript": "^4.7.4"
+    "gts": "^3.1.0"
   }
 }

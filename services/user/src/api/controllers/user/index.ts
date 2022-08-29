@@ -68,7 +68,7 @@ export function startRoute (server: Hapi.Server, configs: IServerConfiguration) 
     });
 
     server.route({
-        method: "post",
+        method: "get",
         path: `/verify-user/{emailVerification}`,
         options:{
             handler: userController.verifyUser,

@@ -1,5 +1,5 @@
 import * as Hapi from 'hapi';
-import { IServerConfiguration, IUser } from 'global-database';
+import { IServerConfiguration } from 'global-database';
 import Boom from 'boom';
 
 import { AdminUserService } from '../../services/AdminUserService';
@@ -22,7 +22,7 @@ export class AdminController {
         try {
             const findUser = await this.userService.findUserById(userId);
             if (!findUser) return Boom.notFound('User not found.');
-            if (!findUser.admin) return Boom.unauthorized('Admin level necessary.')
+            if (!findUser.admin) return Boom.unauthorized('Admin level necessary.');
             
             if (!status){
                 const allUsers = await this.adminUserService.getAllUsers();
@@ -31,18 +31,18 @@ export class AdminController {
                 response = {
                     success: true,
                     users: allUsers
-                }
+                };
             } else {
-                const allUsersByStatus = await this.adminUserService.getAllUsersByStatus(status)
+                const allUsersByStatus = await this.adminUserService.getAllUsersByStatus(status);
                 if(!allUsersByStatus) return h.response({success: true, message: 'No users found'}).code(202);
 
                 response = {
                     success: true,
                     users: allUsersByStatus
-                }
+                };
             }
             
-            return h.response(response).code(200)
+            return h.response(response).code(200);
         } catch (error) {
             console.log(error);
             return Boom.badRequest('Unexpected Error');   
@@ -51,10 +51,10 @@ export class AdminController {
 
     async blockUser(request: BlockUserRequest, h: Hapi.ResponseToolkit){
         const { userId } = request.authId;
-        const { id, cpf, email } = request.payload
+        const { id, cpf, email } = request.payload;
 
         if (!userId) return Boom.unauthorized('Missing user ID.');
-        if (!cpf && !email && !id) return Boom.badRequest('No identifier sent.')
+        if (!cpf && !email && !id) return Boom.badRequest('No identifier sent.');
 
         try {
             const findUser = await this.userService.findUserById(userId);
@@ -75,7 +75,7 @@ export class AdminController {
                 success: true,
                 message: 'User blocked',
                 user: id? id : cpf ? cpf : email
-            }
+            };
             return h.response(response).code(200);
         } catch (error) {
             console.log(error);
@@ -85,10 +85,10 @@ export class AdminController {
 
     async unblockUser(request: UnblockUserRequest, h: Hapi.ResponseToolkit){
         const { userId } = request.authId;
-        const { id, cpf, email } = request.payload
+        const { id, cpf, email } = request.payload;
 
         if (!userId) return Boom.unauthorized('Missing user ID.');
-        if (!cpf && !email && !id) return Boom.badRequest('No identifier sent.')
+        if (!cpf && !email && !id) return Boom.badRequest('No identifier sent.');
 
         try {
             const findUser = await this.userService.findUserById(userId);
@@ -100,7 +100,7 @@ export class AdminController {
             await this.userService.findUserByEmail(email);
 
             if (!findForgivenUser) return Boom.notFound('User not found.');
-            if (findForgivenUser.status !== 'blocked') return Boom.notAcceptable('User is not blocked.')
+            if (findForgivenUser.status !== 'blocked') return Boom.notAcceptable('User is not blocked.');
 
             findForgivenUser.status = 'active';
             await this.userService.saveUserUpdates(findForgivenUser);
@@ -109,7 +109,7 @@ export class AdminController {
                 success: true,
                 message: 'User unblocked',
                 user: id? id : cpf ? cpf : email
-            }
+            };
             return h.response(response).code(200);
         } catch (error) {
             console.log(error);

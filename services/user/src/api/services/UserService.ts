@@ -1,4 +1,4 @@
-import { User, IUser } from 'global-database'
+import { User, IUser } from 'global-database';
 
 export class UserService{
     private userRepository = User;

@@ -1,7 +1,7 @@
 import * as Hapi from 'hapi';
 import * as documentValidator from 'cpf-cnpj-validator'; 
 import * as bcrypt from 'bcrypt';
-import { v4 as uuidv4 } from 'uuid'
+import { v4 as uuidv4 } from 'uuid';
 import { sign } from 'jsonwebtoken';
 import { IServerConfiguration, IUser } from 'global-database';
 import Boom from 'boom';
@@ -15,16 +15,43 @@ export class UserController {
     constructor(private config:IServerConfiguration){}
 
     private generateJwtToken(user:IUser){
-        const signInRequest = {id: user.id}
+        const signInRequest = {id: user.id};
         const token = sign(signInRequest, this.config.jwt.privateKey, {
             expiresIn: this.config.jwt.expiration,
             algorithm: this.config.jwt.algorithm
-        })
+        });
         return token;
     }
 
     private async validateUserPassword(payloadPassword: string, userPassword: string){
         return await bcrypt.compare(payloadPassword, userPassword);
+    }
+
+    private async sendVerificationEmail(email:string, verificationId: string){
+        const nodemailer = require('nodemailer');
+        const transporter = nodemailer.createTransport({
+            host: 'smtp.ethereal.email',
+            port: 587,
+            auth: {
+                user: this.config.emailer.email,
+                pass: this.config.emailer.password
+            }
+        }, null)
+
+        const message = {
+            from: this.config.emailer.email,
+            to: `${email}`,
+            subject: 'Tickets Account Verification',
+            text: 'Click in the link below to activate your account.',
+            html: `<a href=http://${this.config.server.baseURL}:${this.config.server.port}/user/verify-user/${verificationId}> ACTIVATE ACCOUNT.</a>`    
+        }
+
+        transporter.sendMail(message, (err, info) => {
+            if(err) {
+                console.log(err);
+                throw 'Could not send email'; 
+            }
+        })
     }
 
     async loginUser(request: LoginUserRequest, h: Hapi.ResponseToolkit){
@@ -45,13 +72,13 @@ export class UserController {
                 return Boom.unauthorized(`Invalid password.`);
             }
 
-            const token = await this.generateJwtToken(findUser)
+            const token = await this.generateJwtToken(findUser);
             const response = {
                 success: true,
                 login: cpf? cpf : email,
                 userStatus: findUser.status,
                 token: token,
-            }
+            };
 
             return h.response(response).code(200);
         } catch (error) {
@@ -65,7 +92,7 @@ export class UserController {
         
         try {
             const findUser = await this.userService.findUserByEmailVerification(emailVerification);
-            if (!findUser) return Boom.notFound('User not found.')
+            if (!findUser) return Boom.notFound('User not found.');
             if (findUser.status !== 'waiting-verification') return Boom.conflict('User already verified.');
 
             const activatedUser = await this.userService.activateUser(findUser);
@@ -113,7 +140,7 @@ export class UserController {
             }
         }
 
-        if(password !== confirmPassword) return Boom.badRequest('Password do not match.')
+        if(password !== confirmPassword) return Boom.badRequest('Password do not match.');
         if(!documentValidator.cpf.isValid(cpf)) return Boom.badRequest('Invalid CPF.');
         
         try {
@@ -124,6 +151,8 @@ export class UserController {
             if(checkForEmail) return Boom.badRequest('This email already taken.');
 
             const userCreated = await this.userService.createNewUser(userPayload);
+            await this.sendVerificationEmail(email, userPayload.emailVerification);
+            
             const response = {
                 success: true,
                 payload: {
@@ -132,7 +161,7 @@ export class UserController {
                     email: userCreated.email,
                     admin: userCreated.admin
                 }
-            } 
+            }; 
 
             return h.response(response).code(201);
         } catch (error) {
@@ -164,9 +193,9 @@ export class UserController {
                     name: findUser.name,
                     phone: findUser.phone
                 }
-            }
+            };
 
-            return h.response(response).code(200)
+            return h.response(response).code(200);
         } catch (error) {
             console.log(error);
             return Boom.badRequest('Unexpected Error');   
@@ -201,7 +230,7 @@ export class UserController {
 
     async changePassword(request: ChangePassword, h: Hapi.ResponseToolkit){
         const { userId } = request.authId;
-        const { password, newPassword, confirmNewPassword } = request.payload
+        const { password, newPassword, confirmNewPassword } = request.payload;
         const salt = await bcrypt.genSalt(10);
 
         if (!userId) return Boom.unauthorized('Missing user ID');
@@ -220,7 +249,7 @@ export class UserController {
             findUser.password = await bcrypt.hash(newPassword, salt);
             await this.userService.saveUserUpdates(findUser);
 
-            return h.response({success: true, message: 'Password changed.'}).code(200)
+            return h.response({success: true, message: 'Password changed.'}).code(200);
         } catch (error) {
             console.log(error);
             return Boom.badRequest('Unexpected Error'); 
@@ -244,9 +273,9 @@ export class UserController {
                     email: deactivateUser.email,
                     status: deactivateUser.status
                 }
-            }
+            };
 
-            return h.response(response).code(200)
+            return h.response(response).code(200);
 
         } catch (error) {
             console.log(error);
@@ -271,9 +300,9 @@ export class UserController {
                     email: reactivateUser.email,
                     status: reactivateUser.status
                 }
-            }
+            };
 
-            return h.response(response).code(200)
+            return h.response(response).code(200);
         } catch (error) {
             console.log(error);
             return Boom.badRequest('Unexpected Error');

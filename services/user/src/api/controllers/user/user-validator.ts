@@ -22,7 +22,7 @@ export const loginUserValidator = Joi.object().keys({
     cpf: Joi.string().trim().max(11),
     email: Joi.string().trim().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
     password: Joi.string().trim().min(8).max(20).required()
-}).or('cpf', 'email').required()
+}).or('cpf', 'email').required();
 
 export const validateUserValidator = Joi.object().keys({
     emailVerification: Joi.string().guid().required()
@@ -31,10 +31,10 @@ export const validateUserValidator = Joi.object().keys({
 export const updateUserValidator = Joi.object().keys({
     name: Joi.string().trim().max(100),
     phone: Joi.string().trim().max(50)
-}).required()
+}).required();
 
 export const changePassword = Joi.object().keys({
     password: Joi.string().trim().min(8).max(20).required(),
     newPassword: Joi.string().trim().min(8).max(20).required(),
     confirmNewPassword: Joi.string().trim().min(8).max(20).required(),
-}).required()
+}).required();

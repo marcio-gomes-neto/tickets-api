@@ -1,5 +1,5 @@
 require('dotenv').config();
-import { DatabaseConfiguration, IServerConfiguration } from 'global-database'
+import { DatabaseConfiguration, IServerConfiguration } from 'global-database';
 
 export class ServerConfiguration implements IServerConfiguration {
     server = {
@@ -20,5 +20,5 @@ export class ServerConfiguration implements IServerConfiguration {
     emailer = {
         email: process.env.EMAILER_EMAIL,
         password: process.env.EMAILER_PASSWORD
-    }
+    };
 }

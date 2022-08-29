@@ -1,13 +1,19 @@
 {
   "name": "tickets-api",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "E-Commerce API that sell shows and event tickets",
   "scripts": {},
   "author": "Márcio Gomes",
   "license": "ISC",
   "dependencies": {
     "@hapi/vision": "5.5.4",
+    "@types/boom": "7.2.1",
+    "@types/hapi": "^18.0.7",
+    "@types/joi": "^17.2.3",
     "@types/jsonwebtoken": "^8.5.9",
+    "@types/node": "^18.7.11",
+    "@types/nodemailer": "^6.4.5",
+    "@types/uuid": "^8.3.4",
     "boom": "7.3.0",
     "cpf-cnpj-validator": "^1.0.3",
     "del-cli": "^5.0.0",
@@ -26,13 +32,8 @@
     "vision": "^5.4.4"
   },
   "devDependencies": {
-    "@types/boom": "7.2.1",
-    "@types/hapi": "^18.0.7",
-    "@types/joi": "^17.2.3",
-    "@types/node": "^18.7.11",
-    "@types/nodemailer": "^6.4.5",
-    "@types/uuid": "^8.3.4",
-    "nodemon": "^2.0.19",
-    "typescript": "^4.7.4"
+    "@typescript-eslint/eslint-plugin": "^5.35.1",
+    "@typescript-eslint/parser": "^5.35.1",
+    "eslint": "^8.23.0"
   }
 }

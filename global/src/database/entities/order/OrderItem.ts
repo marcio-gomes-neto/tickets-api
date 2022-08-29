@@ -1,17 +1,14 @@
-import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn, Timestamp } from "typeorm";
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import { IOrderItem } from "../../../interfaces/entities/order/IOrderItem";
-import { Ticket } from "../ticket/Ticket";
-import { Order } from "./Order";
-
 @Entity()
 export class OrderItem extends BaseEntity implements IOrderItem{
     @PrimaryGeneratedColumn('uuid', {name: 'id'})
     id?: string;
 
-    @ManyToOne(type => Order, Order => Order.id)
+    @Column('uuid', {nullable: false, name:'order_id'})
     orderId: string;
 
-    @ManyToOne(type => Ticket, Ticket => Ticket.id)
+    @Column('uuid', {nullable: false, name:'ticket_id'})
     ticketId: string;
 
     @Column('integer', {nullable: false, name:'value'})

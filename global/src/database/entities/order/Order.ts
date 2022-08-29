@@ -1,13 +1,12 @@
-import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn, Timestamp } from "typeorm";
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, Timestamp } from "typeorm";
 import { IOrder } from "../../../interfaces/entities/order/IOrder";
-import { User } from "../user/User";
 
 @Entity()
 export class Order extends BaseEntity implements IOrder{
     @PrimaryGeneratedColumn('uuid', {name: 'id'})
     id?: string;
 
-    @ManyToOne(type => User, User => User.id)
+    @Column('uuid', {nullable: false, name:'user_id'})
     userId: string;
 
     @Column('integer', {nullable: false, name:'value'})

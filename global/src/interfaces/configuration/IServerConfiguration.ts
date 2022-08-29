@@ -11,7 +11,7 @@ export interface IServerConfiguration{
 
     jwt: IJwt;
 
-    emailer: {
+    emailer?: {
         email: string;
         password: string;
     }

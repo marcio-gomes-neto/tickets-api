@@ -1,7 +1,7 @@
 import { Request, Server } from 'hapi';
 
 import * as Userdata from './api/controllers/user';
-import * as Admin from './api/controllers/admin'
+import * as Admin from './api/controllers/admin';
 import { JwtPlugin, SwaggerPlugin, registerPlugins, IServerConfiguration } from 'global-database';
 
 export class TicketsServer {
@@ -10,7 +10,7 @@ export class TicketsServer {
     private registerRoutes(server: Server, config:IServerConfiguration){
 
         Userdata.startRoute(server, config);
-        Admin.startRoute(server, config)
+        Admin.startRoute(server, config);
         console.log('Routes registered.');
     }
 
@@ -20,7 +20,7 @@ export class TicketsServer {
             publicKey: this.configs.jwt.publicKey,
             expiration: this.configs.jwt.expiration,
             algorithm: this.configs.jwt.algorithm,
-        })
+        });
         
         const swaggerPluggins = new SwaggerPlugin(server, {
             name: 'Tickets',

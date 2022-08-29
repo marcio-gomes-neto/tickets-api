@@ -1,5 +1,4 @@
 import * as Joi from "joi";
-import JoiDate from '@hapi/joi-date'
 
 
 export const jwtValidator = Joi.object().keys({
@@ -15,7 +14,7 @@ export const createNewEventValidator = Joi.object().keys({
     price: Joi.number().precision(2).min(1).required(),
     eventDate: Joi.date().required(),
     active: Boolean()
-}).required()
+}).required();
 
 export const getAllTickesValidator = Joi.object().keys({
     status: Joi.string().valid('active', '')
@@ -45,4 +44,4 @@ export const updateEventPayloadValidator = Joi.object().keys({
     quantity: Joi.number().integer().min(1),
     price: Joi.number().precision(2).min(1),
     eventDate: Joi.date(),
-}).required()
+}).required();

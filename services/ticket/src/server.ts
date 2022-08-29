@@ -18,7 +18,7 @@ export class TicketsServer {
             publicKey: this.configs.jwt.publicKey,
             expiration: this.configs.jwt.expiration,
             algorithm: this.configs.jwt.algorithm,
-        })
+        });
         
         const swaggerPluggins = new SwaggerPlugin(server, {
             name: 'Tickets',
