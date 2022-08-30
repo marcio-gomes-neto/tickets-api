@@ -2,7 +2,7 @@ import { Ticket, ITicket } from 'global-database';
 
 export class TicketService{
     private ticketRepository = Ticket;
-    private softData = ['id', 'name', 'description', 'genre', 'type', 'quantity', 'price', 'eventDate'];
+    private softData = ['id', 'name', 'description', 'genre', 'type', 'quantity', 'price', 'eventDate', 'active'];
     async getEventByName(name:string){
         const findTicket = await this.ticketRepository.find({where: {name: name}});
         return findTicket;
