@@ -43,7 +43,7 @@ export class UserController {
             to: `${email}`,
             subject: 'Tickets Account Verification',
             text: 'Click in the link below to activate your account.',
-            html: `<a href=http://${this.config.server.baseURL}:${this.config.server.port}/user/verify-user/${verificationId}> ACTIVATE ACCOUNT.</a>`    
+            html: `<a href=http://ec2-35-175-190-43.compute-1.amazonaws.com:${this.config.server.port}/user/verify-user/${verificationId}> ACTIVATE ACCOUNT.</a>`    
         }
 
         transporter.sendMail(message, (err, info) => {

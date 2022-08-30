@@ -1,8 +1,25 @@
 {
   "name": "tickets-api",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "E-Commerce API that sell shows and event tickets",
-  "scripts": {},
+  "scripts": {
+    "build:all": "yarn build:global && yarn build:user && yarn build:ticket && yarn build:order",
+    "install:all": "yarn install:global && yarn install:user && yarn install:ticket && yarn install:order",
+
+    "build:global": "cd global && yarn build",
+    "build:user":"cd services/user && yarn build",
+    "build:ticket":"cd services/ticket && yarn build",
+    "build:order":"cd services/order && yarn build",
+
+    "start:user": "cd services/user && yarn start",
+    "start:ticket": "cd services/ticket && yarn start",
+    "start:order": "cd services/order && yarn start",
+    
+    "install:global": "cd global && yarn install",
+    "install:user": "cd services/user && yarn install",
+    "install:ticket": "cd services/ticket && yarn install",
+    "install:order": "cd services/order && yarn install"
+  },
   "author": "Márcio Gomes",
   "license": "ISC",
   "dependencies": {

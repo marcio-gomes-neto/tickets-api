@@ -1,6 +1,6 @@
 {
   "name": "ticket",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Ticket microservice",
   "main": "./build/index.js",
   "scripts": {
@@ -9,7 +9,8 @@
     "lint": "eslint src/**",
     "lint-fix": "eslint src/** --fix",
     "build": "del-cli --force ./build && tsc",
-    "start": "yarn build && node ./build/index.js"
+    "start": "yarn build && node ./build/index.js",
+    "start-prd": "node ./build/index.js"
   },
   "author": "Márcio Gomes",
   "license": "ISC",

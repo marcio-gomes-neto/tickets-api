@@ -1,6 +1,6 @@
 {
   "name": "order",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Order microservice",
   "main": "./build/index.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "lint-fix": "eslint src/** --fix",
     "build": "del-cli --force ./build && tsc",
     "start": "yarn build && node ./build/index.js",
-    "clean": "del-cli --force ./build"
+    "start-prd": "node ./build/index.js"
   },
   "author": "Marcio Gomes",
   "license": "ISC",
