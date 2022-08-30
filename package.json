@@ -1,6 +1,6 @@
 {
   "name": "tickets-api",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "E-Commerce API that sell shows and event tickets",
   "scripts": {
     "build:all": "yarn build:global && yarn build:user && yarn build:ticket && yarn build:order",

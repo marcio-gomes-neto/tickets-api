@@ -171,10 +171,17 @@ export class OrderController {
             await this.orderService.saveOrderChanges(findUserOpenOrder);
             
             const orderItems = await this.itemService.findItemsFromOrderId(findUserOpenOrder.id);
-            orderItems.forEach(async item => {
-                const findPurchasedTicket = await this.ticketService.getEventById(item.ticketId);
+            let quantityCounter = {};
+
+            orderItems.forEach(item => {
+                quantityCounter[item.ticketId] ? quantityCounter[item.ticketId] += 1 : quantityCounter[item.ticketId] = 1;
+            });
+
+            Object.keys(quantityCounter).forEach(async (item) => {
+                const findPurchasedTicket = await this.ticketService.getEventById(item);
                 if(!findPurchasedTicket) throw 'Unexpected Error.';
-                findPurchasedTicket.quantity -= item.quantity;
+
+                findPurchasedTicket.quantity = findPurchasedTicket.quantity - quantityCounter[item];
 
                 await this.ticketService.saveEventData(findPurchasedTicket);
             });
